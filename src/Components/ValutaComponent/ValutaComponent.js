@@ -3,6 +3,9 @@ import GetCurrencyData from "./Repo/GetCurrencyData";
 import GetOptions from "./Helpers/GetSelectOptions";
 import GetDefaultValues from "./Helpers/GetDefaultValues";
 import GetCurrencyCalcVal from "./Helpers/GetCurrencyCalcVal";
+import mainLogo from "../../Images/cash-flow.svg";
+import ModalSell from "./ModalSell";
+import ModalBuy from "./ModalBuy";
 
 class ValutaComponent extends Component {
   state = {
@@ -11,7 +14,7 @@ class ValutaComponent extends Component {
     currencyNameB: "",
     currencyRateA: null,
     currencyRateB: null,
-    amount:1
+    amount: 1
   };
 
   componentDidMount() {
@@ -29,47 +32,69 @@ class ValutaComponent extends Component {
   }
 
   handleChange = e => {
-      let currencyA;
-      let currencyB;
+    let currencyA;
+    let currencyB;
 
     if (e.target.id === "FromCurr") {
       currencyA = GetDefaultValues(e.target.value, this.state.currencyList);
-      currencyB = GetDefaultValues(this.state.currencyNameB, this.state.currencyList);
-    }
-    else if(e.target.id === "ToCurr"){
-        currencyB = GetDefaultValues(e.target.value, this.state.currencyList);
-        currencyA = GetDefaultValues(this.state.currencyNameA, this.state.currencyList);
+      currencyB = GetDefaultValues(
+        this.state.currencyNameB,
+        this.state.currencyList
+      );
+    } else if (e.target.id === "ToCurr") {
+      currencyB = GetDefaultValues(e.target.value, this.state.currencyList);
+      currencyA = GetDefaultValues(
+        this.state.currencyNameA,
+        this.state.currencyList
+      );
     }
     this.setState({
       currencyNameA: currencyA[0],
       currencyNameB: currencyB[0],
-      currencyRateA: GetCurrencyCalcVal(currencyA[1], currencyA[1], this.state.amount),
-      currencyRateB: GetCurrencyCalcVal(currencyA[1], currencyB[1], this.state.amount)
+      currencyRateA: GetCurrencyCalcVal(
+        currencyA[1],
+        currencyA[1],
+        this.state.amount
+      ),
+      currencyRateB: GetCurrencyCalcVal(
+        currencyA[1],
+        currencyB[1],
+        this.state.amount
+      )
     });
   };
 
-  setAmount = (e) =>{
+  setAmount = e => {
     let amount = e.target.value;
-    let currencyA = GetDefaultValues(this.state.currencyNameA, this.state.currencyList);
-    let currencyB = GetDefaultValues(this.state.currencyNameB, this.state.currencyList);
+    let currencyA = GetDefaultValues(
+      this.state.currencyNameA,
+      this.state.currencyList
+    );
+    let currencyB = GetDefaultValues(
+      this.state.currencyNameB,
+      this.state.currencyList
+    );
     this.setState({
-        amount: amount,
-        currencyRateA: GetCurrencyCalcVal(currencyA[1], currencyA[1], amount),
-        currencyRateB: GetCurrencyCalcVal(currencyA[1], currencyB[1], amount)
+      amount: amount,
+      currencyRateA: GetCurrencyCalcVal(currencyA[1], currencyA[1], amount),
+      currencyRateB: GetCurrencyCalcVal(currencyA[1], currencyB[1], amount)
     });
-  }
+  };
 
   render() {
     return (
-      <form>
+      <>
         <div className="container">
+          <h3>
+            <img src={mainLogo} alt="logo" className="logo" /> Valutaväxlaren
+          </h3>
           <div className="row">
             <div className="input-field col s6">
               <h5>Välj Basvaluta:</h5>
               <select
                 value={this.state.currencyNameA}
                 onChange={this.handleChange}
-                className="browser-default center-align"
+                className="browser-default center-align hoverable"
                 id="FromCurr"
               >
                 {GetOptions(this.state.currencyList, this.state.currencyNameA)}
@@ -80,7 +105,7 @@ class ValutaComponent extends Component {
               <select
                 value={this.state.currencyNameB}
                 onChange={this.handleChange}
-                className="browser-default center-align"
+                className="browser-default center-align hoverable"
                 id="ToCurr"
               >
                 {GetOptions(this.state.currencyList, this.state.currencyNameB)}
@@ -88,12 +113,15 @@ class ValutaComponent extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="input-field col s6">
+            <div className="input-field col s5">
               <h3>
                 {this.state.currencyRateA} {this.state.currencyNameA}
               </h3>
             </div>
-            <div className="input-field col s6">
+            <div className="input-field col s2">
+              <h3>=</h3>
+            </div>
+            <div className="input-field col s5">
               <h3>
                 {this.state.currencyRateB} {this.state.currencyNameB}
               </h3>
@@ -106,15 +134,27 @@ class ValutaComponent extends Component {
             </div>
           </div>
         </div>
-        <div className="row">
-          <div className="input-field col s6">
-            <button className="waves-effect waves-light btn-large">Köp</button>
+        <div className="row btn-row">
+          <div className="input-field col s4 push-s2">
+          <ModalBuy 
+                Amount={this.state.amount} 
+                NameBase={this.state.currencyNameA} 
+                NameForeign={this.state.currencyNameB} 
+                RateBase={this.state.currencyRateA}
+                RateForeign={this.state.currencyRateB}
+                />
           </div>
-          <div className="input-field col s6">
-            <button className="waves-effect waves-light btn-large">Sälj</button>
+          <div className="input-field col s4 push-s2">
+            <ModalSell
+                Amount={this.state.amount} 
+                NameBase={this.state.currencyNameA} 
+                NameForeign={this.state.currencyNameB} 
+                RateBase={this.state.currencyRateA}
+                RateForeign={this.state.currencyRateB}
+                />
           </div>
         </div>
-      </form>
+      </>
     );
   }
 }

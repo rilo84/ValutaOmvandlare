@@ -17,8 +17,10 @@ class ValutaComponent extends Component {
     amount: 1
   };
 
-  componentDidMount() {
-    let currencyData = GetCurrencyData("currData");
+  async componentDidMount() {
+      
+    let currencyData = await GetCurrencyData("currData");
+    console.log(currencyData);
     let currencyA = GetDefaultValues("SEK", currencyData);
     let currencyB = GetDefaultValues("EUR", currencyData);
 

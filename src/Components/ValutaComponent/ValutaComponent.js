@@ -7,10 +7,11 @@ import GetCurrencyCalcVal from "./Helpers/GetCurrencyCalcVal";
 class ValutaComponent extends Component {
   state = {
     currencyList: [],
-    currencyNameA: null,
-    currencyNameB: null,
-    currencyRateA: 1,
-    currencyRateB: null
+    currencyNameA: "",
+    currencyNameB: "",
+    currencyRateA: null,
+    currencyRateB: null,
+    amount:1
   };
 
   componentDidMount() {
@@ -27,18 +28,61 @@ class ValutaComponent extends Component {
     });
   }
 
+  handleChange = e => {
+      let currencyA;
+      let currencyB;
+
+    if (e.target.id === "FromCurr") {
+      currencyA = GetDefaultValues(e.target.value, this.state.currencyList);
+      currencyB = GetDefaultValues(this.state.currencyNameB, this.state.currencyList);
+    }
+    else if(e.target.id === "ToCurr"){
+        currencyB = GetDefaultValues(e.target.value, this.state.currencyList);
+        currencyA = GetDefaultValues(this.state.currencyNameA, this.state.currencyList);
+    }
+    this.setState({
+      currencyNameA: currencyA[0],
+      currencyNameB: currencyB[0],
+      currencyRateA: GetCurrencyCalcVal(currencyA[1], currencyA[1], this.state.amount),
+      currencyRateB: GetCurrencyCalcVal(currencyA[1], currencyB[1], this.state.amount)
+    });
+  };
+
+  setAmount = (e) =>{
+    let amount = e.target.value;
+    let currencyA = GetDefaultValues(this.state.currencyNameA, this.state.currencyList);
+    let currencyB = GetDefaultValues(this.state.currencyNameB, this.state.currencyList);
+    this.setState({
+        amount: amount,
+        currencyRateA: GetCurrencyCalcVal(currencyA[1], currencyA[1], amount),
+        currencyRateB: GetCurrencyCalcVal(currencyA[1], currencyB[1], amount)
+    });
+  }
+
   render() {
     return (
       <form>
         <div className="container">
           <div className="row">
             <div className="input-field col s6">
-              <select className="browser-default center-align" id="FromCurr">
+              <h5>Välj Basvaluta:</h5>
+              <select
+                value={this.state.currencyNameA}
+                onChange={this.handleChange}
+                className="browser-default center-align"
+                id="FromCurr"
+              >
                 {GetOptions(this.state.currencyList, this.state.currencyNameA)}
               </select>
             </div>
             <div className="input-field col s6">
-              <select className="browser-default center-align" id="ToCurr">
+              <h5>Välj köp/sälj valuta:</h5>
+              <select
+                value={this.state.currencyNameB}
+                onChange={this.handleChange}
+                className="browser-default center-align"
+                id="ToCurr"
+              >
                 {GetOptions(this.state.currencyList, this.state.currencyNameB)}
               </select>
             </div>
@@ -46,19 +90,28 @@ class ValutaComponent extends Component {
           <div className="row">
             <div className="input-field col s6">
               <h3>
-                {this.state.currencyRateA} {this.state.currKeyA}
+                {this.state.currencyRateA} {this.state.currencyNameA}
               </h3>
             </div>
             <div className="input-field col s6">
               <h3>
-                {this.state.currencyRateB} {this.state.currKeyB}
+                {this.state.currencyRateB} {this.state.currencyNameB}
               </h3>
             </div>
           </div>
           <div className="row">
             <div className="input-field col s12">
+              <label>Ange belopp</label>
               <input onChange={this.setAmount} type="number"></input>
             </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="input-field col s6">
+            <button className="waves-effect waves-light btn-large">Köp</button>
+          </div>
+          <div className="input-field col s6">
+            <button className="waves-effect waves-light btn-large">Sälj</button>
           </div>
         </div>
       </form>

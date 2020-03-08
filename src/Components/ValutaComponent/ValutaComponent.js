@@ -109,7 +109,7 @@ class ValutaComponent extends Component {
           </h3>
           <div className="row currContainer">
             <div className="input-field col s5">
-              <h5>Välj Säljvaluta:</h5>
+              <h5>Välj säljvaluta:</h5>
               <select
                 value={this.state.currencyNameA}
                 onChange={this.handleChange}
@@ -123,7 +123,7 @@ class ValutaComponent extends Component {
               <img onClick={this.swapCurrency} src={swapIcon} alt="icon" className="icon" />
             </div>
             <div className="input-field col s5">
-              <h5>Välj Köpvaluta:</h5>
+              <h5>Välj köpvaluta:</h5>
               <select
                 value={this.state.currencyNameB}
                 onChange={this.handleChange}
@@ -157,7 +157,7 @@ class ValutaComponent extends Component {
           </div>
         </div>
         <div className="row btn-row">
-          <div className="input-field col s4 push-s4">
+          <div className="input-field col s6 push-s3">
           <ModalBuy 
                 Amount={this.state.amount} 
                 NameBase={this.state.currencyNameA} 

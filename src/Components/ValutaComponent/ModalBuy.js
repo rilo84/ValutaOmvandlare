@@ -23,7 +23,7 @@ class ModalBuy extends Component {
           className="btn-large green lighten-1 modal-trigger"
           data-target="modal1"
         >
-          Köp
+          Bekräfta Köp
         </button>
 
         <div

@@ -9,3 +9,20 @@
 .logo{
   width:4rem;
 }
+
+.icon{
+  width:3rem;
+}
+
+.imgContainer{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  height:100%;
+}
+
+.currContainer{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}

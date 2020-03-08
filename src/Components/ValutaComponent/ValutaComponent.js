@@ -20,7 +20,6 @@ class ValutaComponent extends Component {
   async componentDidMount() {
       
     let currencyData = await GetCurrencyData("currData");
-    console.log(currencyData);
     let currencyA = GetDefaultValues("SEK", currencyData);
     let currencyB = GetDefaultValues("EUR", currencyData);
 
@@ -68,10 +67,28 @@ class ValutaComponent extends Component {
 
   setAmount = e => {
     let amount = e.target.value;
+    
     let currencyA = GetDefaultValues(
       this.state.currencyNameA,
       this.state.currencyList
     );
+    document.querySelector(".btn-large").disabled = false;
+    if(amount > (currencyA[1]*100000)){
+      amount = this.state.amount;
+      e.target.value = amount;
+      document.querySelector("#labelMsg").textContent="";
+      document.querySelector("#errorMsg").textContent = `Max tillåtna belopp är 
+      ${currencyA[1]*100000} ${this.state.currencyNameA} motsvarande 100000 USD`;
+    }
+    else if(amount <1){
+      document.querySelector("#labelMsg").textContent="";
+      document.querySelector("#errorMsg").textContent = "Minsta tillåtna belopp är 1";
+      document.querySelector(".btn-large").disabled = true;
+    }
+    else{
+      document.querySelector("#labelMsg").textContent="Ange belopp att handla med"
+      document.querySelector("#errorMsg").textContent = "";
+    }
     let currencyB = GetDefaultValues(
       this.state.currencyNameB,
       this.state.currencyList
@@ -116,7 +133,7 @@ class ValutaComponent extends Component {
                 className="browser-default center-align hoverable"
                 id="FromCurr"
               >
-                {GetOptions(this.state.currencyList, this.state.currencyNameA)}
+                {GetOptions(this.state.currencyList)}
               </select>
             </div>
             <div className="col s2 imgContainer">
@@ -130,7 +147,7 @@ class ValutaComponent extends Component {
                 className="browser-default center-align hoverable"
                 id="ToCurr"
               >
-                {GetOptions(this.state.currencyList, this.state.currencyNameB)}
+                {GetOptions(this.state.currencyList)}
               </select>
             </div>
           </div>
@@ -151,8 +168,9 @@ class ValutaComponent extends Component {
           </div>
           <div className="row">
             <div className="input-field col s12">
-              <label>Ange belopp att handla med</label>
-              <input onChange={this.setAmount} type="number"></input>
+              <label id="labelMsg">Ange belopp att handla med</label>
+              <label id="errorMsg" className="red-text"></label>
+              <input onChange={this.setAmount} type="number" min="1" max="100000"></input>
             </div>
           </div>
         </div>

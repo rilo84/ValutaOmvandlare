@@ -10,7 +10,7 @@ class ModalBuy extends Component {
       opacity: 0.3,
       dismissible: false,
       startingTop: "4%",
-      endingTop: "14%"
+      endingTop: "10%"
     };
     M.Modal.init(this.Modal, options);
   }
@@ -19,13 +19,14 @@ class ModalBuy extends Component {
     let { Amount, RateBase, RateForeign, NameBase, NameForeign} = this.props;
     return (
       <>
-        <button
+      <button
+          disabled
           className="btn-large green lighten-1 modal-trigger"
           data-target="modal1"
         >
           Bekräfta Köp
         </button>
-
+        
         <div
           ref={Modal => {
             this.Modal = Modal;

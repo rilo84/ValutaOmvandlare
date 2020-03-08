@@ -12,6 +12,7 @@
 
 .icon{
   width:3rem;
+  cursor: pointer;
 }
 
 .imgContainer{
@@ -25,4 +26,8 @@
   display:flex;
   justify-content: center;
   align-items: center;
+}
+
+#FromCurr, #ToCurr{
+  cursor: pointer;
 }

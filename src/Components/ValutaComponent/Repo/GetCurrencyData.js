@@ -7,11 +7,9 @@ const GetCurrencyData = async name => {
       .then(data => {
         let currentTime = new Date().getTime();
         let expireTime = currentTime + 3600000;
-        
         localStorage.setItem("expireTime", expireTime);
         localStorage.setItem(name, JSON.stringify(data.rates));
         console.log("Hämtade ny data från API");
-        // return Object.entries(data.rates);
       });
   } 
     let storedData = localStorage.getItem(name);
@@ -21,7 +19,6 @@ const GetCurrencyData = async name => {
     console.log(`Tid till nästa updatering: \n${remainingMinutes.toFixed(0)} minuter`);
     
     return data;
-  
 };
 
 export default GetCurrencyData;

@@ -31,3 +31,10 @@
 #FromCurr, #ToCurr{
   cursor: pointer;
 }
+
+@media only screen and (max-width: 600px) {
+  .currText{
+    font-size: 1rem;
+    font-weight: bold;
+  }
+}

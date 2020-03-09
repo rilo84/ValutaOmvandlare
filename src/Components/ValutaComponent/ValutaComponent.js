@@ -153,15 +153,15 @@ class ValutaComponent extends Component {
           </div>
           <div className="row">
             <div className="input-field col s5">
-              <h3>
+              <h3 className="currText">
                 {this.state.currencyRateA} {this.state.currencyNameA}
               </h3>
             </div>
             <div className="input-field col s2">
-              <h3>=</h3>
+              <h3 className="currText">=</h3>
             </div>
             <div className="input-field col s5">
-              <h3>
+              <h3 className="currText">
                 {this.state.currencyRateB} {this.state.currencyNameB}
               </h3>
             </div>

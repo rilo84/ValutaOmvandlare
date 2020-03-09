@@ -78,7 +78,7 @@ class ValutaComponent extends Component {
       e.target.value = amount;
       document.querySelector("#labelMsg").textContent="";
       document.querySelector("#errorMsg").textContent = `Max tillåtna belopp är 
-      ${currencyA[1]*100000} ${this.state.currencyNameA} motsvarande 100000 USD`;
+      ${(currencyA[1]*100000).toFixed(0)} ${this.state.currencyNameA}`;
     }
     else if(amount <1){
       document.querySelector("#labelMsg").textContent="";
@@ -121,12 +121,12 @@ class ValutaComponent extends Component {
     return (
       <>
         <div className="container">
-          <h3>
+          <h3 className="headerText">
             <img src={mainLogo} alt="logo" className="logo" /> Valutaväxlaren
           </h3>
           <div className="row currContainer">
             <div className="input-field col s5">
-              <h5>Välj säljvaluta:</h5>
+              <h5 className="choiceText">Välj säljvaluta:</h5>
               <select
                 value={this.state.currencyNameA}
                 onChange={this.handleChange}
@@ -140,7 +140,7 @@ class ValutaComponent extends Component {
               <img onClick={this.swapCurrency} src={swapIcon} alt="icon" className="icon" />
             </div>
             <div className="input-field col s5">
-              <h5>Välj köpvaluta:</h5>
+              <h5 className="choiceText">Välj köpvaluta:</h5>
               <select
                 value={this.state.currencyNameB}
                 onChange={this.handleChange}
@@ -151,16 +151,16 @@ class ValutaComponent extends Component {
               </select>
             </div>
           </div>
-          <div className="row">
-            <div className="input-field col s5">
+          <div className="row currTextContainer">
+            <div className="input-field col s12 m5 currTextCol">
               <h3 className="currText">
                 {this.state.currencyRateA} {this.state.currencyNameA}
               </h3>
             </div>
-            <div className="input-field col s2">
+            <div className="input-field col s12 m2 currTextCol">
               <h3 className="currText">=</h3>
             </div>
-            <div className="input-field col s5">
+            <div className="input-field col s12 m5 currTextCol">
               <h3 className="currText">
                 {this.state.currencyRateB} {this.state.currencyNameB}
               </h3>
@@ -175,7 +175,7 @@ class ValutaComponent extends Component {
           </div>
         </div>
         <div className="row btn-row">
-          <div className="input-field col s6 push-s3">
+          <div className="input-field col s8 push-s2 m6 push-m3">
           <ModalBuy 
                 Amount={this.state.amount} 
                 NameBase={this.state.currencyNameA} 

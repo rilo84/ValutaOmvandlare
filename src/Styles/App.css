@@ -34,7 +34,20 @@
 
 @media only screen and (max-width: 600px) {
   .currText{
-    font-size: 1rem;
-    font-weight: bold;
+    font-size: 2rem;
+    margin:0;
   }
+
+  .choiceText{
+    font-size:1.2rem;
+  }
+
+  .icon{
+    width:2rem;
+  }
+
+  .headerText{
+    margin-bottom:0;
+  }
+
 }

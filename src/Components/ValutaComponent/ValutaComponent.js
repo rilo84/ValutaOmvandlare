@@ -166,11 +166,11 @@ class ValutaComponent extends Component {
               </h3>
             </div>
           </div>
-          <div className="row">
+          <div className="row amountRow">
             <div className="input-field col s12">
-              <label id="labelMsg">Ange belopp att handla med</label>
+              <label htmlFor="amountField" id="labelMsg">Ange belopp att handla med</label>
               <label id="errorMsg" className="red-text"></label>
-              <input onChange={this.setAmount} type="number" min="1" max="100000"></input>
+              <input id="amountField" onChange={this.setAmount} type="number" min="1" max="100000"></input>
             </div>
           </div>
         </div>

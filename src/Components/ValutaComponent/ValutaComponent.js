@@ -3,11 +3,13 @@ import GetCurrencyData from "./Repo/GetCurrencyData";
 import GetOptions from "./Helpers/GetSelectOptions";
 import GetDefaultValues from "./Helpers/GetDefaultValues";
 import GetCurrencyCalcVal from "./Helpers/GetCurrencyCalcVal";
-import mainLogo from "../../Images/cash-flow.svg";
 import swapIcon from "../../Images/exchange.svg";
 import ModalBuy from "./ModalBuy";
+import Header from "./Header";
+import InfoText from "./InfoText";
 
 class ValutaComponent extends Component {
+
   state = {
     currencyList: [],
     currencyNameA: "",
@@ -18,7 +20,6 @@ class ValutaComponent extends Component {
   };
 
   async componentDidMount() {
-      
     let currencyData = await GetCurrencyData("currData");
     let currencyA = GetDefaultValues("SEK", currencyData);
     let currencyB = GetDefaultValues("EUR", currencyData);
@@ -121,9 +122,7 @@ class ValutaComponent extends Component {
     return (
       <>
         <div className="container">
-          <h3 className="headerText">
-            <img src={mainLogo} alt="logo" className="logo" /> Valutaväxlaren
-          </h3>
+          <Header />
           <div className="row currContainer">
             <div className="input-field col s5">
               <h5 className="choiceText">Välj säljvaluta:</h5>
@@ -153,17 +152,13 @@ class ValutaComponent extends Component {
           </div>
           <div className="row currTextContainer">
             <div className="input-field col s12 m5 currTextCol">
-              <h3 className="currText">
-                {this.state.currencyRateA} {this.state.currencyNameA}
-              </h3>
+              <InfoText text={`${this.state.currencyRateA} ${this.state.currencyNameA}`} />
             </div>
             <div className="input-field col s12 m2 currTextCol">
-              <h3 className="currText">=</h3>
+            <InfoText text="=" />
             </div>
             <div className="input-field col s12 m5 currTextCol">
-              <h3 className="currText">
-                {this.state.currencyRateB} {this.state.currencyNameB}
-              </h3>
+              <InfoText text={`${this.state.currencyRateB} ${this.state.currencyNameB}`} />
             </div>
           </div>
           <div className="row amountRow">
